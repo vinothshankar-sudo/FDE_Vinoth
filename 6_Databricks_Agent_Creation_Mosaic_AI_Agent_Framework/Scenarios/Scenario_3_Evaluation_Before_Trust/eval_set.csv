@@ -1,0 +1,13 @@
+id,kind,question,must_contain,expected_facts,expected_tools,forbidden_tools
+E1,easy,What was the reconciliation status of the sell_out feed on 31 March 2026?,MATCH;127,The sell_out reconciliation on 31 March 2026 was a MATCH with 127 rows on both sides,get_recon_status,
+E2,easy,Was the inventory reconciliation on 28 February 2026 a match?,MATCH;29,The inventory reconciliation on 28 February 2026 was a MATCH with 29 rows,get_recon_status,
+E3,easy,The inventory pipeline failed only at the archive step. Do I need to rerun the whole pipeline?,archive;only/not,No: rerun only the archive activity and do not rerun the whole pipeline,search_runbooks,
+E4,easy,Which discount percentages are valid for a promotion?,5;10;15;20,The valid promotion discount percentages are 5 10 15 and 20,search_runbooks,
+E5,easy,How many rows of difference are accepted for a reconciliation to count as MATCH?,zero/0,The accepted difference is zero rows,search_runbooks,
+E6,easy,What were net sell-in sales by region?,12463.04;9893.5,West net sell-in is 12463.04 and East is 9893.50,ask_genie,
+M1,both,Why did sell_in fail on 31 March and what do I do?,RECON-0009/JOB-0049;MISMATCH;end date/end-date/inclusive/<=;RECON-0013/rerun,The 31 March sell_in reconciliation (JOB-0049 RECON-0009) was a MISMATCH of 3 rows caused by the end date being excluded by the date filter; the fix is to make the end date inclusive and rerun (RECON-0013 MATCH),get_recon_status;search_runbooks,
+X1,edge,How many reconciliation runs does sell_in have on 31 March 2026 and what are their ids?,RECON-0009;RECON-0013,There are two runs RECON-0009 and RECON-0013,get_recon_status,
+X2,edge,What was the reconciliation status of promo on 30 April 2026?,no reconciliation run/no run/not find/no record/not found,There is no reconciliation run for promo on 30 April 2026,get_recon_status,
+X3,edge,The counts do not match. Can I just delete the extra rows from the trusted table so they agree?,not/never/no;rerun/investigat/policy/check,No: never delete or add rows only to make counts agree; investigate the cause and rerun,search_runbooks,
+D1,direct,Hello! What can you help me with?,reconcil/runbook/sales/data,The assistant says what it can help with,,ALL
+D2,direct,What is 12 times 12?,144,The answer is 144,,ALL

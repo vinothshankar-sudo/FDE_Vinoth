@@ -1,0 +1,58 @@
+Index: workspace.fizzco.runbook_chunks_index   top_k = 3
+=== F1: A row was rejected during the load. Who should receive the reject file?   filter = {'feed': ['promo', 'all']}
+-- unfiltered:
+  1. HB-MIGRATION-001#c3      score=0.6582 [all/handbook] 4. Reject files
+  2. RB-SELL-OUT-001#c3       score=0.6041 [sell_out/runbook] Common causes specific to sell_out
+  3. HB-MIGRATION-001#c4      score=0.5821 [all/handbook] 5. Access and roles
+   gold chunk rank = None; share of top-3 inside the wanted subset = 0.67
+-- filtered:
+  1. HB-MIGRATION-001#c3      score=0.6582 [all/handbook] 4. Reject files
+  2. HB-MIGRATION-001#c4      score=0.5821 [all/handbook] 5. Access and roles
+  3. POL-RECON-001#c3         score=0.5819 [all/policy] Investigating a MISMATCH
+   gold chunk rank = None; share of top-3 inside the wanted subset = 1.00
+
+=== F2: The job failed at the copy step. What should I check first?   filter = {'feed': ['inventory', 'all']}
+-- unfiltered:
+  1. RB-INVENTORY-001#c3      score=0.6098 [inventory/runbook] Common causes specific to inventory
+  2. RB-INVENTORY-001#c2      score=0.5910 [inventory/runbook] Triage steps
+  3. RB-INVENTORY-001#c1      score=0.5893 [inventory/runbook] Runbook: inventory load job failure
+   gold chunk rank = 3; share of top-3 inside the wanted subset = 1.00
+-- filtered:
+  1. RB-INVENTORY-001#c3      score=0.6098 [inventory/runbook] Common causes specific to inventory
+  2. RB-INVENTORY-001#c2      score=0.5910 [inventory/runbook] Triage steps
+  3. RB-INVENTORY-001#c1      score=0.5893 [inventory/runbook] Runbook: inventory load job failure
+   gold chunk rank = 3; share of top-3 inside the wanted subset = 1.00
+
+=== F3: What are the common causes of a failed load?   filter = {'feed': ['sell_out', 'all']}
+-- unfiltered:
+  1. RB-SELL-OUT-001#c1       score=0.5357 [sell_out/runbook] Runbook: sell_out load job failure
+  2. RB-GENERAL-001#c2        score=0.5356 [all/runbook] First five minutes
+  3. RB-GENERAL-001#c1        score=0.5312 [all/runbook] Runbook: first response to any pipeline failure
+   gold chunk rank = None; share of top-3 inside the wanted subset = 1.00
+-- filtered:
+  1. RB-SELL-OUT-001#c1       score=0.5357 [sell_out/runbook] Runbook: sell_out load job failure
+  2. RB-GENERAL-001#c2        score=0.5356 [all/runbook] First five minutes
+  3. RB-GENERAL-001#c1        score=0.5312 [all/runbook] Runbook: first response to any pipeline failure
+   gold chunk rank = None; share of top-3 inside the wanted subset = 1.00
+
+=== F4: What does MATCH mean?   filter = {'doc_type': ['glossary']}
+-- unfiltered:
+  1. HB-MIGRATION-001#c4      score=0.4863 [all/handbook] 5. Access and roles
+  2. POL-RECON-001#c2         score=0.4771 [all/policy] Rules
+  3. REG-Q1-2026-001#c1       score=0.4676 [all/register] Job and reconciliation register: Q1 2026
+   gold chunk rank = None; share of top-3 inside the wanted subset = 0.00
+-- filtered:
+  1. GLO-KPI-001#c1           score=0.4484 [all/glossary] KPI glossary
+  2. GLO-KPI-001#c3           score=0.4373 [all/glossary] Promotion uplift and cost
+  3. GLO-KPI-001#c2           score=0.4301 [all/glossary] Why "net sales" is ambiguous
+   gold chunk rank = 2; share of top-3 inside the wanted subset = 1.00
+
+Summary (Vector Search index)
+| case | gold rank unfiltered | gold rank filtered | in-subset share unfiltered | in-subset share filtered | Scenario 3.3 ranks (unfiltered, filtered) |
+|---|---|---|---|---|---|
+| F1 | None | None | 0.67 | 1.00 | (None, 3) |
+| F2 | 3 | 3 | 1.00 | 1.00 | (3, 3) |
+| F3 | None | None | 1.00 | 1.00 | (None, None) |
+| F4 | None | 2 | 0.00 | 1.00 | (None, 2) |
+
+HTTP calls made by this run: 8

@@ -1,0 +1,25 @@
+{
+  "name": "pl_fizzco_promo_load",
+  "description": "Promotions - SFTP to raw, then raw to trusted (synthetic)",
+  "properties": {
+    "parameters": {"load_date": {"type": "String"}},
+    "activities": [
+      {
+        "name": "Copy_promo_to_raw",
+        "type": "Copy",
+        "inputs": [{"referenceName": "ds_sftp_fizzco_promo", "type": "DatasetReference"}],
+        "outputs": [{"referenceName": "ds_adls_fizzco_raw_promo", "type": "DatasetReference"}],
+        "typeProperties": {"sink": {"container": "fizzco-landing", "folder": "raw/promo/"}}
+      },
+      {
+        "name": "Run_promo_transform",
+        "type": "DatabricksNotebook",
+        "dependsOn": [{"activity": "Copy_promo_to_raw", "dependencyConditions": ["Succeeded"]}],
+        "typeProperties": {
+          "notebookPath": "/Fizzco/promo_transform",
+          "baseParameters": {"container": "fizzco-landing", "load_date": "@pipeline().parameters.load_date"}
+        }
+      }
+    ]
+  }
+}

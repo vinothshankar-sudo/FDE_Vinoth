@@ -1,0 +1,10 @@
+Attempt to create a Direct Vector Access index: workspace.fizzco.runbook_chunks_direct_index on endpoint fizzco_vs
+[00:22:19] Reply after 1 s: {"name": "workspace.fizzco.runbook_chunks_direct_index", "endpoint_name": "fizzco_vs", "primary_key": "chunk_id", "index_type": "DIRECT_ACCESS", "direct_access_index_spec": {"embedding_vector_columns": [{"name": "embedding", "embedding_dimension": 1024}], "schema_json": "{\"chunk_id\": \"string\", \"doc_id\": \"string\", \"feed\": \"string\", \"doc_type\": \"string\", \"section\": \"string\", \"text\": \"string\", \"embedding\": \"array<float>\"}"}, "status": {"detailed_state": "PROVISIONING_INDEX", "message": "Direct access index creation in progress.", "indexed_row_count": 0, "ready": false,
+
+Result: creation accepted. Loading the 42 cached vectors and querying.
+[00:22:22] Upsert of 42 rows took 2 s
+  1. INC-2026-03-31-001#c1    score=0.6672 [sell_in/incident] Incident note: sell_in reconciliation mismatch on 31 March 2026
+  2. RB-SELL-IN-001#c3        score=0.6445 [sell_in/runbook] Common causes specific to sell_in
+  3. INC-2026-03-31-001#c3    score=0.6275 [sell_in/incident] How it was verified
+Gold chunk in top 3: rank 1
+HTTP calls made by this run: 3

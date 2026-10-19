@@ -1,0 +1,25 @@
+# Independent verification for scenario 1.6 
+# Synthetic data only.
+
+## 1. SQLite file vs trusted CSVs (read-only open)
+trusted_sell_in: db=63 csv=63 MATCH
+    [('order_date', 'TEXT'), ('retailer_id', 'TEXT'), ('sku', 'TEXT'), ('units', 'INTEGER'), ('gross_amount', 'REAL'), ('discount_amount', 'REAL'), ('net_amount', 'REAL')]
+trusted_inventory: db=40 csv=40 MATCH
+    [('snapshot_date', 'TEXT'), ('dc_id', 'TEXT'), ('sku', 'TEXT'), ('stock_on_hand', 'INTEGER')]
+trusted_promo: db=12 csv=12 MATCH
+    [('promo_id', 'TEXT'), ('sku', 'TEXT'), ('retailer_id', 'TEXT'), ('start_date', 'TEXT'), ('end_date', 'TEXT'), ('discount_pct', 'REAL'), ('promo_days', 'INTEGER')]
+sum(net_amount) trusted_sell_in: 22356.54
+
+## 2. Same MCP server and config as .vscode/mcp.json, called directly: table_info on trusted_sell_in
+### trusted_sell_in (63 rows)
+
+- order_date (TEXT)
+- retailer_id (TEXT)
+- sku (TEXT)
+- units (INTEGER)
+- gross_amount (REAL)
+- discount_amount (REAL)
+- net_amount (REAL)
+
+## 3. Node 26 failure reproduced (cause of the silent exit)
+prebuild-install: No prebuilt binaries found (target=26.5.0 ...) -> node-gyp rebuild fails -> npx exits 1 with only a deprecation warning

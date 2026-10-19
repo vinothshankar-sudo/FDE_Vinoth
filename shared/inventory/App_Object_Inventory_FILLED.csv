@@ -1,0 +1,11 @@
+object_id,object_name,object_type,layer,source_system,target_table,owner,status,depends_on
+OBJ-001,pl_fizzco_sell_in_load,Pipeline,Raw,SFTP,,data_eng_team,Active,
+OBJ-002,sell_in_transform,Notebook,Trusted,ADLS,trusted_sell_in,data_eng_team,Active,OBJ-001
+OBJ-003,trusted_sell_in,Table,Trusted,Databricks,trusted_sell_in,data_eng_team,Active,OBJ-002
+OBJ-004,pl_fizzco_inventory_load,Pipeline,Raw,SFTP,,data_eng_team,Active,
+OBJ-005,inventory_transform,Notebook,Trusted,ADLS,trusted_inventory,data_eng_team,Active,OBJ-004
+OBJ-005,trusted_inventory,Table,Trusted,Databricks,trusted_inventory,data_eng_team,Active,OBJ-005
+OBJ-007,pl_fizzco_promo_load,Pipeline,Raw,SFTP,,data_eng_team,Active,
+OBJ-008,promo_transform,Notebook,Trusted,ADLS,trusted_promo,data_eng_team,Active,OBJ-099
+OBJ-009,trusted_promo,Table,Trusted,Databricks,trusted_promo,data_eng_team,Active,OBJ-008
+OBJ-010,recon_utility,Notebook,Utility,Databricks,,data_eng_team,Active,OBJ-003

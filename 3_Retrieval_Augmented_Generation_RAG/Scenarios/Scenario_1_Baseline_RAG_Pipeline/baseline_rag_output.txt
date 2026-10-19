@@ -1,0 +1,51 @@
+Corpus: 14 documents, 42 chunks (size 200, overlap 40), top_k 3
+Embedding: databricks:databricks-gte-large-en   Answering: databricks:databricks-meta-llama-3-3-70b-instruct
+=== Q1: Why did the sell_in reconciliation fail on 31 March 2026, and how was it fixed?
+Retrieved (top 3):
+  1. INC-2026-03-31-001#c1    score=0.7506 [sell_in/incident] Incident note: sell_in reconciliation mismatch on 31 March 2026
+  2. RB-SELL-IN-001#c3        score=0.7242 [sell_in/runbook] Common causes specific to sell_in
+  3. INC-2026-03-31-001#c3    score=0.7032 [sell_in/incident] How it was verified
+Answer: The sell_in reconciliation failed on 31 March 2026 due to an off-by-one error in the date filter used to count trusted rows [S1]. The cause was that the end date of the window was excluded, resulting in 3 rows dated 2026-03-31 not being counted [S1]. The fix was to make the end date inclusive by changing the counting code to use `<=` instead of `<` [S2]. After the fix, the pipeline was rerun with the same load_date, and the reconciliation was run again, resulting in a MATCH status [S2].
+Sources cited:
+  [S1] INC-2026-03-31-001#c1 | Incident note - sell_in reconciliation mismatch on 31 March 2026 | Incident note: sell_in reconciliation mismatch on 31 March 2026 | "# Incident note: sell_in reconciliation mismatch on 31 March 2026 ## Summary On 31 March 2026 the quarter-end reconciliation for the sell_in feed (job..."
+  [S2] RB-SELL-IN-001#c3 | Runbook - sell_in load job failure | Common causes specific to sell_in | "counting code excluded the end date. This happened on 31 March 2026 (JOB-0049, RECON-0009). The fix is to make the end date inclusive (`<=`, not `<`)...."
+Checks: gold chunk in top 3 = True (rank 1); citations valid = True; key facts in answer = True; PASS = True
+=== Q2: The inventory pipeline failed only at the archive step. Do I need to rerun the whole pipeline?
+Retrieved (top 3):
+  1. RB-INVENTORY-001#c2      score=0.7962 [inventory/runbook] Triage steps
+  2. RB-INVENTORY-001#c3      score=0.7951 [inventory/runbook] Common causes specific to inventory
+  3. RB-INVENTORY-001#c1      score=0.7536 [inventory/runbook] Runbook: inventory load job failure
+Answer: No, you do not need to rerun the whole pipeline [S1]. If only the third activity, `Archive_Landing_Files`, failed, the trusted data is already correct [S1]. You should rerun only the archive activity [S1].
+Sources cited:
+  [S1] RB-INVENTORY-001#c2 | Runbook - inventory load job failure | Triage steps | "folder. 4. If the second activity failed, read the notebook error. Most failures are an unknown dc_id or an unknown sku. 5. If only the third activity..."
+Checks: gold chunk in top 3 = True (rank 1); citations valid = True; key facts in answer = True; PASS = True
+=== Q3: Which discount percentages are valid for a promotion?
+Retrieved (top 3):
+  1. RB-PROMO-001#c2          score=0.6319 [promo/runbook] Common causes specific to promo
+  2. GLO-KPI-001#c3           score=0.6135 [all/glossary] Promotion uplift and cost
+  3. GLO-KPI-001#c2           score=0.5812 [all/glossary] Why "net sales" is ambiguous
+Answer: The valid discount percentages for a promotion are 5, 10, 15, or 20 [S1]. Any other value is rejected [S1].
+Sources cited:
+  [S1] RB-PROMO-001#c2 | Runbook - promo load job failure | Common causes specific to promo | "specific to promo - **End date before start date.** A promotion whose end_date is earlier than its start_date cannot have a valid promo_days and is re..."
+Checks: gold chunk in top 3 = True (rank 1); citations valid = True; key facts in answer = True; PASS = True
+=== Q4: How many rows of difference are accepted for a reconciliation to count as MATCH?
+Retrieved (top 3):
+  1. POL-RECON-001#c1         score=0.7957 [all/policy] Reconciliation policy
+  2. HB-MIGRATION-001#c4      score=0.7642 [all/handbook] 5. Access and roles
+  3. INC-2026-03-31-001#c3    score=0.7382 [sell_in/incident] How it was verified
+Answer: A reconciliation where the source rows and the trusted rows for the window are equal, so the difference is zero, is considered a MATCH [S2]. The accepted difference is zero rows [S1]. A difference of one row or more is a MISMATCH [S1].
+Sources cited:
+  [S1] POL-RECON-001#c1 | Reconciliation policy | Reconciliation policy | "# Reconciliation policy ## Purpose Reconciliation proves that nothing was lost between the raw and trusted layers. It compares the number of rows in t..."
+  [S2] HB-MIGRATION-001#c4 | Migration operations handbook | 5. Access and roles | "row filter on the gold tables, not by separate copies of the data. Nobody edits trusted or gold tables by hand; corrections are made at the source and..."
+Checks: gold chunk in top 3 = True (rank 1); citations valid = True; key facts in answer = True; PASS = True
+=== Q5: What happens if someone triggers a pipeline manually without a load_date?
+Retrieved (top 3):
+  1. RB-GENERAL-001#c2        score=0.6993 [all/runbook] First five minutes
+  2. RB-INVENTORY-001#c1      score=0.6631 [inventory/runbook] Runbook: inventory load job failure
+  3. RB-SELL-IN-001#c2        score=0.6559 [sell_in/runbook] Triage steps
+Answer: If someone triggers a pipeline manually without a load_date, the pipeline will fail at the start of the run [S3]. To fix this, the pipeline should be re-triggered with the load_date in the format YYYY-MM-DD [S3].
+Sources cited:
+  [S3] RB-SELL-IN-001#c2 | Runbook - sell_in load job failure | Triage steps | "file is the problem. If `Run_sell_in_transform` failed, the notebook is the problem. 3. Check the parameter `load_date`. It has no default value, so a..."
+Checks: gold chunk in top 3 = True (rank 3); citations valid = True; key facts in answer = True; PASS = True
+Summary: 5 of 5 questions pass all three checks.
+Endpoint calls made in this run: 21 (cached results cost nothing).

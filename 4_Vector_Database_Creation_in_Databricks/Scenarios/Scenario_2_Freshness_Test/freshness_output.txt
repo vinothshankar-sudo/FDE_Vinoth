@@ -1,0 +1,31 @@
+Freshness test, started 23:52:35 UTC
+
+Before the insert: query = By what time should the sell_out scan file arrive, and when do I raise an incident if it is late?
+  1. RB-SELL-OUT-001#c2       score=0.6436 [sell_out/runbook] Triage steps
+  2. RB-SELL-OUT-001#c1       score=0.6190 [sell_out/runbook] Runbook: sell_out load job failure
+  3. RB-SELL-IN-001#c1        score=0.5723 [sell_in/runbook] Runbook: sell_in load job failure
+New row retrievable before insert: False
+
+[23:53:10] Row RB-TEST-FRESHNESS-001#c1 inserted into workspace.fizzco.runbook_chunks; table now has 43 rows (SQL took 13 s)
+[23:53:14] Index right after insert, before any sync: rows=42 (triggered index does not update by itself)
+[23:53:18] Sync requested. Waiting for the index to reach 43 rows (status checks every 10 s, no model calls)
+  [23:53:21] +6 s  ready=True rows=42 message=Index is currently online, pipeline update is pending setup of pipeline resources. Check latest status: https://dbc-269fab6f-fa01.cloud.databricks.com/explore/data/workspace/fizzco/runbook_chunks_index
+  [23:54:04] +49 s  ready=True rows=42 message=Index is online but is currently is in the process of re-syncing initial data. Check latest status: https://dbc-269fab6f-fa01.cloud.databricks.com/explore/data/workspace/fizzco/runbook_chunks_index
+  [23:54:15] +60 s  ready=True rows=42 message=Index creation succeeded. Check latest status: https://dbc-269fab6f-fa01.cloud.databricks.com/explore/data/workspace/fizzco/runbook_chunks_index
+  [23:54:36] +82 s  ready=True rows=43 message=Index creation succeeded. Check latest status: https://dbc-269fab6f-fa01.cloud.databricks.com/explore/data/workspace/fizzco/runbook_chunks_index
+
+After the sync: query = By what time should the sell_out scan file arrive, and when do I raise an incident if it is late?
+  1. RB-TEST-FRESHNESS-001#c1 score=0.7637 [sell_out/runbook] Late scan file
+  2. RB-SELL-OUT-001#c2       score=0.6436 [sell_out/runbook] Triage steps
+  3. RB-SELL-OUT-001#c1       score=0.6190 [sell_out/runbook] Runbook: sell_out load job failure
+New row retrievable after sync: True
+
+Timing (seconds since the sync request unless stated)
+| event | time |
+|---|---|
+| INSERT statement duration | 13 s |
+| sync request to index row count = 43 | 1 min 22 s (82 s) |
+| sync request to row retrievable by similarity search | 1 min 24 s (84 s) |
+| insert finished to row retrievable | 1 min 28 s (88 s) |
+
+HTTP calls made by this run: 17

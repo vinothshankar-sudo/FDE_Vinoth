@@ -1,0 +1,29 @@
+Expected results of demo_questions.sql, computed independently with sqlite on the gold CSVs (not by Genie).
+Source rows: 68 weekly rows, 2025-12-29 to 2026-03-30.
+
+-- D1. How are our regions performing?   (added to the space as example query 1)
+  region | net_sell_in_sales | shopper_sales | units_shipped | units_sold | sell_through_pct
+  West | 12463.04 | 15437.84 | 7552 | 6712 | 88.9
+  East | 9893.5 | 12848.45 | 5627 | 5005 | 88.9
+
+-- D2. Which retail channel is performing best?   (NOT in the space as an example: tests generalisation)
+  channel | units_shipped | units_sold | sell_through_pct
+  Discount | 1924 | 1813 | 94.2
+  Convenience | 4587 | 4174 | 91.0
+  Supermarket | 6668 | 5730 | 85.9
+
+-- D3. Which retailers are underperforming?   (added to the space as example query 2)
+  retailer_name | region | channel | units_shipped | units_sold | sell_through_pct
+  Kestrel Mart | West | Supermarket | 1033 | 795 | 77.0
+  Daily Fresh | East | Supermarket | 1049 | 845 | 80.6
+  Evergreen Foods | West | Supermarket | 2002 | 1751 | 87.5
+
+-- D4. How is performance trending by month?   (NOT in the space as an example)
+  month | net_sell_in_sales | units_shipped | units_sold | sell_through_pct
+  2025-12 | 254.77 | 291 | 269 | 92.4
+  2026-01 | 8810.64 | 4759 | 4199 | 88.2
+  2026-02 | 4629.1 | 3241 | 2796 | 86.3
+  2026-03 | 8662.03 | 4888 | 4453 | 91.1
+
+-- D5. What is our market share versus competitors?   (OUT OF SCOPE: no such data. Genie must say it cannot answer.)
+  (no SQL: Genie must decline)

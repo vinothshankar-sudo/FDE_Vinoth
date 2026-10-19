@@ -1,0 +1,9 @@
+{
+  "servers": {
+    "fizzco-sqlite": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "-p", "node@22", "-p", "mcp-sqlite-server@1.0.1", "--", "mcp-sqlite-server"]
+    }
+  }
+}

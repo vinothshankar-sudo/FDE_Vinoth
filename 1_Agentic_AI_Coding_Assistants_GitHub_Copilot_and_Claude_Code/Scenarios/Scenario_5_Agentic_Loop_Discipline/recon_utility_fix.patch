@@ -1,0 +1,11 @@
+--- a/databricks/recon_utility.py
++++ b/databricks/recon_utility.py
+@@ -17,7 +17,7 @@
+     n = 0
+     for r in csv.DictReader(open(path)):
+         d = date.fromisoformat(r[date_col])
+-        if start <= d < end:
++        if start <= d <= end:
+             n += 1
+     return n
+ 

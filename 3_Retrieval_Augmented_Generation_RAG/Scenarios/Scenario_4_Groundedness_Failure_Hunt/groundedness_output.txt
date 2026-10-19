@@ -1,0 +1,36 @@
+Best retrieval score per question (cosine similarity of the top chunk):
+  U1 (unanswerable): top score 0.4809, top chunk CHK-CUTOVER-001#c2
+  U2 (unanswerable): top score 0.6575, top chunk POL-RECON-001#c1
+  U3 (unanswerable): top score 0.7018, top chunk HB-MIGRATION-001#c1
+  C1 (control): top score 0.7957, top chunk POL-RECON-001#c1
+
+##### Stage A naive prompt
+U1 [unanswerable] Who is the on-call engineer this weekend and what is their phone number?
+  answer: The provided context passages (S1, S2, S3) do not mention the on-call engineer or their phone number. They appear to be related to a cutover checklist for retiring a legacy warehouse and a runbook for a sell_in load job failure. If you need to find the on-call engineer's contact information, you may want to check a separate resource, such as an on-call schedule or a company directory.
+  refused = False; has citation = False
+U2 [unanswerable] What is the recovery time SLA for the loyalty-card feed?
+  answer: The provided context passages do not mention a "loyalty-card feed" or a recovery time SLA for any feed. The passages discuss reconciliation policies, migration operations, and data pipelines for feeds such as sell_in, sell_out, inventory, and promo, but do not provide information on a loyalty-card feed or its recovery time SLA.
+  refused = False; has citation = False
+U3 [unanswerable] Which cloud region hosts the fizzco-landing container?
+  answer: The context passages do not explicitly mention the cloud region that hosts the `fizzco-landing` container. However, according to passage [S1], "Regions are always East or West." This suggests that the `fizzco-landing` container is likely hosted in either the East or West region, but the specific region is not specified.
+  refused = False; has citation = True
+C1 [control] How many rows of difference are accepted for a reconciliation to count as MATCH?
+  answer: According to the Reconciliation policy (section 3. **Tolerance**), the accepted difference is zero rows. A difference of one row or more is considered a MISMATCH. Therefore, for a reconciliation to count as a MATCH, there must be no difference in rows, i.e., the difference must be zero.
+  refused = False; has citation = False
+
+##### Stage B strict grounded prompt
+U1 [unanswerable] Who is the on-call engineer this weekend and what is their phone number?
+  answer: I could not find this in the Fizzco documents.
+  refused = True; has citation = False
+U2 [unanswerable] What is the recovery time SLA for the loyalty-card feed?
+  answer: I could not find this in the Fizzco documents.
+  refused = True; has citation = False
+U3 [unanswerable] Which cloud region hosts the fizzco-landing container?
+  answer: I could not find this in the Fizzco documents.
+  refused = True; has citation = False
+C1 [control] How many rows of difference are accepted for a reconciliation to count as MATCH?
+  answer: A reconciliation where the source rows and the trusted rows for the window are equal, so the difference is zero, is considered a MATCH [S2]. The accepted difference is zero rows [S1]. A difference of one row or more is a MISMATCH [S1].
+  refused = False; has citation = True
+
+Human review of the answers above decides which unanswerable questions were hallucinated; see the README.
+Endpoint calls made in this run: 10 (cached results cost nothing).

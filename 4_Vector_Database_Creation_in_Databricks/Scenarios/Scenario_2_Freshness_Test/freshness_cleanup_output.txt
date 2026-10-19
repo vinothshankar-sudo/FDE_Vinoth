@@ -1,0 +1,12 @@
+Cleanup, started 00:06:11 UTC: delete the test row and sync again
+[00:06:19] Row deleted; table has 42 rows
+  [00:06:29] +6 s  ready=True rows=43 message=Index is currently online, pipeline update is pending setup of pipeline resources. Check latest status: https://dbc-269fab6f-fa01.cloud.databricks.com/explore/data/workspace/fizzco/runbook_chunks_index
+  [00:07:12] +50 s  ready=True rows=43 message=Index is online but is currently is in the process of re-syncing initial data. Check latest status: https://dbc-269fab6f-fa01.cloud.databricks.com/explore/data/workspace/fizzco/runbook_chunks_index
+  [00:07:23] +61 s  ready=True rows=43 message=Index creation succeeded. Check latest status: https://dbc-269fab6f-fa01.cloud.databricks.com/explore/data/workspace/fizzco/runbook_chunks_index
+  [00:07:34] +72 s  ready=True rows=42 message=Index creation succeeded. Check latest status: https://dbc-269fab6f-fa01.cloud.databricks.com/explore/data/workspace/fizzco/runbook_chunks_index
+[00:07:34] Index back to 42 rows, 1 min 12 s (72 s) after the sync request (delete propagation time)
+  1. RB-SELL-OUT-001#c2       score=0.6436 [sell_out/runbook] Triage steps
+  2. RB-SELL-OUT-001#c1       score=0.6190 [sell_out/runbook] Runbook: sell_out load job failure
+  3. RB-SELL-IN-001#c1        score=0.5723 [sell_in/runbook] Runbook: sell_in load job failure
+Test row still retrievable: False
+HTTP calls made by this run: 12

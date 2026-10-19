@@ -1,0 +1,112 @@
+diff
+--- a/adf/pl_fizzco_inventory_load.json
++++ b/adf/pl_fizzco_inventory_load.json
+@@ -9,7 +9,7 @@
+         "type": "Copy",
+         "inputs": [{"referenceName": "ds_sftp_fizzco_inventory", "type": "DatasetReference"}],
+         "outputs": [{"referenceName": "ds_adls_fizzco_raw_inventory", "type": "DatasetReference"}],
+-        "typeProperties": {"sink": {"container": "fizzco-raw", "folder": "raw/inventory/"}}
++        "typeProperties": {"sink": {"container": "fizzco-landing", "folder": "raw/inventory/"}}
+       },
+       {
+         "name": "Run_inventory_transform",
+@@ -17,7 +17,7 @@
+         "dependsOn": [{"activity": "Copy_inventory_to_raw", "dependencyConditions": ["Succeeded"]}],
+         "typeProperties": {
+           "notebookPath": "/Fizzco/inventory_transform",
+-          "baseParameters": {"container": "fizzco-raw", "load_date": "@pipeline().parameters.load_date"}
++          "baseParameters": {"container": "fizzco-landing", "load_date": "@pipeline().parameters.load_date"}
+         }
+       },
+       {
+diff
+--- a/adf/pl_fizzco_promo_load.json
++++ b/adf/pl_fizzco_promo_load.json
+@@ -9,7 +9,7 @@
+         "type": "Copy",
+         "inputs": [{"referenceName": "ds_sftp_fizzco_promo", "type": "DatasetReference"}],
+         "outputs": [{"referenceName": "ds_adls_fizzco_raw_promo", "type": "DatasetReference"}],
+-        "typeProperties": {"sink": {"container": "fizzco-raw", "folder": "raw/promo/"}}
++        "typeProperties": {"sink": {"container": "fizzco-landing", "folder": "raw/promo/"}}
+       },
+       {
+         "name": "Run_promo_transform",
+@@ -17,7 +17,7 @@
+         "dependsOn": [{"activity": "Copy_promo_to_raw", "dependencyConditions": ["Succeeded"]}],
+         "typeProperties": {
+           "notebookPath": "/Fizzco/promo_transform",
+-          "baseParameters": {"container": "fizzco-raw", "load_date": "@pipeline().parameters.load_date"}
++          "baseParameters": {"container": "fizzco-landing", "load_date": "@pipeline().parameters.load_date"}
+         }
+       }
+     ]
+diff
+--- a/adf/pl_fizzco_sell_in_load.json
++++ b/adf/pl_fizzco_sell_in_load.json
+@@ -9,7 +9,7 @@
+         "type": "Copy",
+         "inputs": [{"referenceName": "ds_sftp_fizzco_sell_in", "type": "DatasetReference"}],
+         "outputs": [{"referenceName": "ds_adls_fizzco_raw_sell_in", "type": "DatasetReference"}],
+-        "typeProperties": {"sink": {"container": "fizzco-raw", "folder": "raw/sell_in/"}}
++        "typeProperties": {"sink": {"container": "fizzco-landing", "folder": "raw/sell_in/"}}
+       },
+       {
+         "name": "Run_sell_in_transform",
+@@ -17,7 +17,7 @@
+         "dependsOn": [{"activity": "Copy_sell_in_to_raw", "dependencyConditions": ["Succeeded"]}],
+         "typeProperties": {
+           "notebookPath": "/Fizzco/sell_in_transform",
+-          "baseParameters": {"container": "fizzco-raw", "load_date": "@pipeline().parameters.load_date"}
++          "baseParameters": {"container": "fizzco-landing", "load_date": "@pipeline().parameters.load_date"}
+         }
+       }
+     ]
+diff
+--- a/databricks/config.py
++++ b/databricks/config.py
+@@ -1,5 +1,5 @@
+ # Shared settings for the Fizzco lake notebooks (synthetic).
+ STORAGE_ACCOUNT = "fizzcostorage"
+-CONTAINER = "fizzco-raw"
++CONTAINER = "fizzco-landing"
+ RAW_DIR = "data/raw"
+ TRUSTED_DIR = "data/trusted"
+diff
+--- a/databricks/inventory_transform.py
++++ b/databricks/inventory_transform.py
+@@ -3,7 +3,7 @@
+ import csv
+ 
+ # NOTE: container path hardcoded in this notebook (legacy)
+-SOURCE_URI = "abfss://fizzco-raw@fizzcostorage.dfs.core.windows.net/raw/inventory/"
++SOURCE_URI = "abfss://fizzco-landing@fizzcostorage.dfs.core.windows.net/raw/inventory/"
+ 
+ def load_inventory(path):
+     out = []
+diff
+--- a/ddl/trusted_inventory.sql
++++ b/ddl/trusted_inventory.sql
+@@ -3,4 +3,4 @@
+   snapshot_date DATE, dc_id STRING, sku STRING, stock_on_hand INT
+ )
+ USING DELTA
+-LOCATION 'abfss://fizzco-raw@fizzcostorage.dfs.core.windows.net/trusted/inventory';
++LOCATION 'abfss://fizzco-landing@fizzcostorage.dfs.core.windows.net/trusted/inventory';
+diff
+--- a/ddl/trusted_promo.sql
++++ b/ddl/trusted_promo.sql
+@@ -3,4 +3,4 @@
+   promo_id STRING, sku STRING, retailer_id STRING, start_date DATE, end_date DATE, discount_pct INT, promo_days INT
+ )
+ USING DELTA
+-LOCATION 'abfss://fizzco-raw@fizzcostorage.dfs.core.windows.net/trusted/promo';
++LOCATION 'abfss://fizzco-landing@fizzcostorage.dfs.core.windows.net/trusted/promo';
+diff
+--- a/ddl/trusted_sell_in.sql
++++ b/ddl/trusted_sell_in.sql
+@@ -3,4 +3,4 @@
+   order_date DATE, retailer_id STRING, sku STRING, units INT, gross_amount DECIMAL(12,2), discount_amount DECIMAL(12,2), net_amount DECIMAL(12,2)
+ )
+ USING DELTA
+-LOCATION 'abfss://fizzco-raw@fizzcostorage.dfs.core.windows.net/trusted/sell_in';
++LOCATION 'abfss://fizzco-landing@fizzcostorage.dfs.core.windows.net/trusted/sell_in';

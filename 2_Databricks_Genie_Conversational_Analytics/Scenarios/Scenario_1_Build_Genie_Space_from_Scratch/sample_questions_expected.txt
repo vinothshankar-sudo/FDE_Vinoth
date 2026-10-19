@@ -1,0 +1,46 @@
+Expected output of sample_questions.sql (computed independently from the gold CSVs with SQLite)
+
+-- Q1. What were net sell-in sales by region?
+  region | net_sell_in_sales
+  West | 12463.04
+  East | 9893.5
+
+-- Q2. What is the sell-through rate by retailer?
+  retailer_name | region | sell_in_units | sell_out_units | sell_through_pct
+  Greenleaf | West | 663 | 688 | 103.8
+  Fieldstone | East | 733 | 696 | 95.0
+  Brightmart | East | 1380 | 1268 | 91.9
+  Cornerbay | West | 1883 | 1700 | 90.3
+  Ironwood Market | West | 1971 | 1778 | 90.2
+  Juniper Stores | East | 1261 | 1125 | 89.2
+  Harbor Grocers | East | 1204 | 1071 | 89.0
+  Evergreen Foods | West | 2002 | 1751 | 87.5
+  Daily Fresh | East | 1049 | 845 | 80.6
+  Kestrel Mart | West | 1033 | 795 | 77.0
+
+-- Q3. Which products had the largest gap between units shipped and units sold?
+  product_name | category | units_shipped | units_sold | unit_gap
+  Fizzco Marie Biscuits 200g | Snack | 1850 | 1472 | 378
+  Fizzco Lime Soda 330ml can | Beverage | 2785 | 2463 | 322
+  Fizzco Orange 500ml bottle | Beverage | 1656 | 1413 | 243
+  Fizzco BBQ Chips 150g | Snack | 2053 | 1874 | 179
+  Fizzco Cola 330ml can | Beverage | 1446 | 1314 | 132
+  Fizzco Choc Biscuits 200g | Snack | 874 | 764 | 110
+  Fizzco Salted Chips 150g | Snack | 1368 | 1291 | 77
+  Fizzco Cola 500ml bottle | Beverage | 1147 | 1126 | 21
+
+-- Q4. Which promotions had the highest uplift?
+  promo_id | sku | region | discount_pct | baseline_units | promo_units | incremental_units | uplift_pct | promo_cost
+  PROMO-2026-0011 | FZ-BISC-MARI | East | 15 | 374 | 590 | 216 | 57.8 | 168.15
+  PROMO-2026-0006 | FZ-BISC-CHOC | East | 10 | 750 | 1132 | 382 | 50.9 | 237.72
+  PROMO-2026-0004 | FZ-ORNG-500 | East | 5 | 573 | 837 | 264 | 46.1 | 75.33
+  PROMO-2026-0003 | FZ-CHIP-BBQ | East | 20 | 476 | 674 | 198 | 41.6 | 323.52
+  PROMO-2026-0012 | FZ-CHIP-BBQ | West | 15 | 933 | 1317 | 384 | 41.2 | 474.12
+
+-- Q5. Which promotions cost the most per extra unit sold?
+  promo_id | sku | region | discount_pct | incremental_units | promo_cost | promo_cost_per_extra_unit
+  PROMO-2026-0007 | FZ-ORNG-500 | East | 20 | 90 | 227.88 | 2.53
+  PROMO-2026-0003 | FZ-CHIP-BBQ | East | 20 | 198 | 323.52 | 1.63
+  PROMO-2026-0008 | FZ-BISC-CHOC | West | 20 | 499 | 755.58 | 1.51
+  PROMO-2026-0001 | FZ-LIME-330 | East | 20 | 134 | 172.08 | 1.28
+  PROMO-2026-0012 | FZ-CHIP-BBQ | West | 15 | 384 | 474.12 | 1.23

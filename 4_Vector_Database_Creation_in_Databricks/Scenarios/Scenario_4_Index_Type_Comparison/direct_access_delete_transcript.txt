@@ -1,0 +1,13 @@
+Transcribed from the terminal output pasted into the chat (cleanup of the test index, then a check of the main index).
+
+$ python3 -u run_direct_access.py delete
+Deleted workspace.fizzco.runbook_chunks_direct_index
+$ python3 shared/vector/show_index_spec.py
+Index:               workspace.fizzco.runbook_chunks_index
+Endpoint:            fizzco_vs
+Index type:          DELTA_SYNC
+Primary key:         chunk_id
+Source table:        workspace.fizzco.runbook_chunks
+Pipeline (sync):     TRIGGERED
+Embedding source:    [{"name": "text", "embedding_model_endpoint_name": "databricks-gte-large-en"}]
+Indexed rows:        42   ready=True

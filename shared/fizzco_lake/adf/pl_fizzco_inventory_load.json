@@ -1,0 +1,31 @@
+{
+  "name": "pl_fizzco_inventory_load",
+  "description": "Inventory snapshots - SFTP to raw, then raw to trusted (synthetic)",
+  "properties": {
+    "parameters": {"load_date": {"type": "String"}},
+    "activities": [
+      {
+        "name": "Copy_inventory_to_raw",
+        "type": "Copy",
+        "inputs": [{"referenceName": "ds_sftp_fizzco_inventory", "type": "DatasetReference"}],
+        "outputs": [{"referenceName": "ds_adls_fizzco_raw_inventory", "type": "DatasetReference"}],
+        "typeProperties": {"sink": {"container": "fizzco-landing", "folder": "raw/inventory/"}}
+      },
+      {
+        "name": "Run_inventory_transform",
+        "type": "DatabricksNotebook",
+        "dependsOn": [{"activity": "Copy_inventory_to_raw", "dependencyConditions": ["Succeeded"]}],
+        "typeProperties": {
+          "notebookPath": "/Fizzco/inventory_transform",
+          "baseParameters": {"container": "fizzco-landing", "load_date": "@pipeline().parameters.load_date"}
+        }
+      },
+      {
+        "name": "Archive_Landing_Files",
+        "type": "Copy",
+        "dependsOn": [{"activity": "Run_inventory_transform", "dependencyConditions": ["Succeeded"]}],
+        "typeProperties": {"sink": {"container": "fizzco-raw-archive", "folder": "inventory/"}}
+      }
+    ]
+  }
+}

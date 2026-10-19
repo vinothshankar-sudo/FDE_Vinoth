@@ -1,0 +1,96 @@
+{
+  "note": "Five support questions. gold_phrases: a retrieved chunk that contains any of these holds the answer. must_contain: every group needs at least one of its words in the answer. Written before any retrieval was run.",
+  "questions": [
+    {
+      "id": "Q1",
+      "question": "Why did the sell_in reconciliation fail on 31 March 2026, and how was it fixed?",
+      "gold_doc": "INC-2026-03-31-001",
+      "gold_phrases": [
+        "The cause was an off-by-one error in the date filter",
+        "The fix is to make the end date inclusive"
+      ],
+      "must_contain": [
+        [
+          "end date",
+          "end-date",
+          "off-by-one",
+          "date filter"
+        ],
+        [
+          "<=",
+          "inclusive"
+        ]
+      ]
+    },
+    {
+      "id": "Q2",
+      "question": "The inventory pipeline failed only at the archive step. Do I need to rerun the whole pipeline?",
+      "gold_doc": "RB-INVENTORY-001",
+      "gold_phrases": [
+        "Rerun only the archive activity",
+        "Do not rerun the whole pipeline"
+      ],
+      "must_contain": [
+        [
+          "archive"
+        ],
+        [
+          "only",
+          "not",
+          "no"
+        ]
+      ]
+    },
+    {
+      "id": "Q3",
+      "question": "Which discount percentages are valid for a promotion?",
+      "gold_doc": "RB-PROMO-001",
+      "gold_phrases": [
+        "5, 10, 15 or 20"
+      ],
+      "must_contain": [
+        [
+          "5"
+        ],
+        [
+          "10"
+        ],
+        [
+          "15"
+        ],
+        [
+          "20"
+        ]
+      ]
+    },
+    {
+      "id": "Q4",
+      "question": "How many rows of difference are accepted for a reconciliation to count as MATCH?",
+      "gold_doc": "POL-RECON-001",
+      "gold_phrases": [
+        "The accepted difference is zero rows",
+        "There is no tolerance"
+      ],
+      "must_contain": [
+        [
+          "zero",
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "Q5",
+      "question": "What happens if someone triggers a pipeline manually without a load_date?",
+      "gold_doc": "RB-SELL-IN-001",
+      "gold_phrases": [
+        "a manual trigger without it fails",
+        "a manual run without it fails at once"
+      ],
+      "must_contain": [
+        [
+          "fail"
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+Search proof for Scenario 2 (run from Assignment/, text files only; docs/ and __pycache__ excluded)
+
+$ grep -rnP "fizzco-raw(?!-archive)" shared/fizzco_lake --include=*.json --include=*.py --include=*.sql --exclude-dir=docs --exclude-dir=__pycache__
+(no output = zero stale matches)  count: 0
+
+$ grep -rn "fizzco-raw-archive" shared/fizzco_lake --include=*.json (the different container, must be unchanged)
+shared/fizzco_lake/adf/pl_fizzco_inventory_load.json:27:        "typeProperties": {"sink": {"container": "fizzco-raw-archive", "folder": "inventory/"}}
+
+$ grep -rn "fizzco-landing" shared/fizzco_lake ... (new name)
+shared/fizzco_lake/adf/pl_fizzco_inventory_load.json:12:        "typeProperties": {"sink": {"container": "fizzco-landing", "folder": "raw/inventory/"}}
+shared/fizzco_lake/adf/pl_fizzco_inventory_load.json:20:          "baseParameters": {"container": "fizzco-landing", "load_date": "@pipeline().parameters.load_da
+shared/fizzco_lake/adf/pl_fizzco_promo_load.json:12:        "typeProperties": {"sink": {"container": "fizzco-landing", "folder": "raw/promo/"}}
+shared/fizzco_lake/adf/pl_fizzco_promo_load.json:20:          "baseParameters": {"container": "fizzco-landing", "load_date": "@pipeline().parameters.load_date"}
+shared/fizzco_lake/adf/pl_fizzco_sell_in_load.json:12:        "typeProperties": {"sink": {"container": "fizzco-landing", "folder": "raw/sell_in/"}}
+shared/fizzco_lake/adf/pl_fizzco_sell_in_load.json:20:          "baseParameters": {"container": "fizzco-landing", "load_date": "@pipeline().parameters.load_date
+shared/fizzco_lake/ddl/trusted_inventory.sql:6:LOCATION 'abfss://fizzco-landing@fizzcostorage.dfs.core.windows.net/trusted/inventory';
+shared/fizzco_lake/ddl/trusted_sell_in.sql:6:LOCATION 'abfss://fizzco-landing@fizzcostorage.dfs.core.windows.net/trusted/sell_in';
+shared/fizzco_lake/ddl/trusted_promo.sql:6:LOCATION 'abfss://fizzco-landing@fizzcostorage.dfs.core.windows.net/trusted/promo';
+shared/fizzco_lake/databricks/config.py:3:CONTAINER = "fizzco-landing"
+shared/fizzco_lake/databricks/inventory_transform.py:6:SOURCE_URI = "abfss://fizzco-landing@fizzcostorage.dfs.core.windows.net/raw/inventory/"
+
+$ cd shared/fizzco_lake && python3 databricks/promo_transform.py
+container: fizzco-landing rows: 12

@@ -1,0 +1,17 @@
+Diagnosis of F1: A row was rejected during the load. Who should receive the reject file?
+-- filter feed in [promo, all], top_k = 8:
+  1. HB-MIGRATION-001#c3      score=0.6582 [all/handbook] 4. Reject files
+  2. HB-MIGRATION-001#c4      score=0.5821 [all/handbook] 5. Access and roles
+  3. POL-RECON-001#c3         score=0.5819 [all/policy] Investigating a MISMATCH
+  4. RB-PROMO-001#c3          score=0.5792 [promo/runbook] Fix and rerun
+  5. RB-GENERAL-001#c3        score=0.5680 [all/runbook] Escalation
+  6. POL-RECON-001#c2         score=0.5629 [all/policy] Rules
+  7. RB-GENERAL-001#c2        score=0.5571 [all/runbook] First five minutes
+  8. HB-MIGRATION-001#c2      score=0.5539 [all/handbook] 2. Naming conventions
+   gold chunk rank = 4
+-- filter feed in [promo] only, top_k = 3:
+  1. RB-PROMO-001#c3          score=0.5792 [promo/runbook] Fix and rerun
+  2. RB-PROMO-001#c1          score=0.5344 [promo/runbook] Runbook: promo load job failure
+  3. RB-PROMO-001#c2          score=0.5335 [promo/runbook] Common causes specific to promo
+   gold chunk rank = 1
+HTTP calls made by this run: 2

@@ -1,0 +1,64 @@
+=== F1: A row was rejected during the load. Who should receive the reject file?   filter = {'feed': ['promo', 'all']}
+-- unfiltered:
+  1. HB-MIGRATION-001#c3      score=0.7468 [all/handbook] 4. Reject files
+  2. RB-SELL-OUT-001#c3       score=0.6820 [sell_out/runbook] Common causes specific to sell_out
+  3. HB-MIGRATION-001#c4      score=0.6513 [all/handbook] 5. Access and roles
+   answer: The reject file should be sent to the feed owner [S1]. The feed owner depends on the type of feed: the sell-in owner for sell_in, the retailer owner for sell_out, the warehouse team for inventory, and the commercial team for promo [S1].
+   gold chunk rank = None; share of top-3 inside the wanted subset = 0.67
+-- filtered:
+  1. HB-MIGRATION-001#c3      score=0.7468 [all/handbook] 4. Reject files
+  2. HB-MIGRATION-001#c4      score=0.6513 [all/handbook] 5. Access and roles
+  3. RB-PROMO-001#c3          score=0.6490 [promo/runbook] Fix and rerun
+   answer: The reject file should be sent to the feed owner [S1]. Since the type of feed is not specified, the feed owner could be the sell-in owner, the retailer owner, the warehouse team, or the commercial team, depending on the type of feed [S1]. For example, if it's a promo feed, the commercial team should receive the reject file [S1] and [S3].
+   gold chunk rank = 3; share of top-3 inside the wanted subset = 1.00
+
+=== F2: The job failed at the copy step. What should I check first?   filter = {'feed': ['inventory', 'all']}
+-- unfiltered:
+  1. RB-INVENTORY-001#c3      score=0.6896 [inventory/runbook] Common causes specific to inventory
+  2. RB-INVENTORY-001#c2      score=0.6640 [inventory/runbook] Triage steps
+  3. RB-INVENTORY-001#c1      score=0.6608 [inventory/runbook] Runbook: inventory load job failure
+   answer: According to [S3], if the first activity failed, you should check that the snapshot file for the load_date exists in the SFTP folder.
+   gold chunk rank = 3; share of top-3 inside the wanted subset = 1.00
+-- filtered:
+  1. RB-INVENTORY-001#c3      score=0.6896 [inventory/runbook] Common causes specific to inventory
+  2. RB-INVENTORY-001#c2      score=0.6640 [inventory/runbook] Triage steps
+  3. RB-INVENTORY-001#c1      score=0.6608 [inventory/runbook] Runbook: inventory load job failure
+   answer: According to [S3], if the first activity failed, you should check that the snapshot file for the load_date exists in the SFTP folder.
+   gold chunk rank = 3; share of top-3 inside the wanted subset = 1.00
+
+=== F3: What are the common causes of a failed load?   filter = {'feed': ['sell_out', 'all']}
+-- unfiltered:
+  1. RB-GENERAL-001#c2        score=0.5705 [all/runbook] First five minutes
+  2. RB-SELL-OUT-001#c1       score=0.5666 [sell_out/runbook] Runbook: sell_out load job failure
+  3. RB-INVENTORY-001#c3      score=0.5631 [inventory/runbook] Common causes specific to inventory
+   answer: I could not find this in the Fizzco documents.
+   gold chunk rank = None; share of top-3 inside the wanted subset = 0.67
+-- filtered:
+  1. RB-GENERAL-001#c2        score=0.5705 [all/runbook] First five minutes
+  2. RB-SELL-OUT-001#c1       score=0.5666 [sell_out/runbook] Runbook: sell_out load job failure
+  3. RB-GENERAL-001#c1        score=0.5607 [all/runbook] Runbook: first response to any pipeline failure
+   answer: I could not find this in the Fizzco documents.
+   gold chunk rank = None; share of top-3 inside the wanted subset = 1.00
+
+=== F4: What does MATCH mean?   filter = {'doc_type': ['glossary']}
+-- unfiltered:
+  1. HB-MIGRATION-001#c4      score=0.4851 [all/handbook] 5. Access and roles
+  2. POL-RECON-001#c2         score=0.4671 [all/policy] Rules
+  3. REG-Q1-2026-001#c1       score=0.4474 [all/register] Job and reconciliation register: Q1 2026
+   answer: A MATCH means a reconciliation where the source rows and the trusted rows for the window are equal, so the difference is zero [S1].
+   gold chunk rank = None; share of top-3 inside the wanted subset = 0.00
+-- filtered:
+  1. GLO-KPI-001#c1           score=0.3898 [all/glossary] KPI glossary
+  2. GLO-KPI-001#c3           score=0.3618 [all/glossary] Promotion uplift and cost
+  3. GLO-KPI-001#c2           score=0.3462 [all/glossary] Why "net sales" is ambiguous
+   answer: MATCH means the difference between source rows and trusted rows is zero [S2].
+   gold chunk rank = 2; share of top-3 inside the wanted subset = 1.00
+
+Summary
+| case | gold rank unfiltered | gold rank filtered | in-subset share unfiltered | in-subset share filtered |
+|---|---|---|---|---|
+| F1 | None | 3 | 0.67 | 1.00 |
+| F2 | 3 | 3 | 1.00 | 1.00 |
+| F3 | None | None | 0.67 | 1.00 |
+| F4 | None | 2 | 0.00 | 1.00 |
+Endpoint calls made in this run: 11 (cached results cost nothing).

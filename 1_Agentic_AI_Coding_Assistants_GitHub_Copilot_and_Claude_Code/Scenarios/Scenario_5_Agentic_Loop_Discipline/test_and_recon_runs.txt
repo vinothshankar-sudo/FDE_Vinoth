@@ -1,0 +1,28 @@
+Test run BEFORE the fix (old recon_utility.py taken from the pre-fix backup, same test file)
+$ python3 -m unittest -v tests.test_recon_utility
+test_both_counters_include_start_and_end_dates (tests.test_recon_utility.TestReconUtility) ... FAIL
+test_identical_files_match_including_end_date (tests.test_recon_utility.TestReconUtility) ... FAIL
+test_missing_row_still_mismatches (tests.test_recon_utility.TestReconUtility) ... ok
+test_real_sell_in_files_match (tests.test_recon_utility.TestReconUtility) ... FAIL
+FAIL: test_both_counters_include_start_and_end_dates (tests.test_recon_utility.TestReconUtility)
+AssertionError: 2 != 3
+FAIL: test_identical_files_match_including_end_date (tests.test_recon_utility.TestReconUtility)
+AssertionError: 'MISMATCH' != 'MATCH'
+FAIL: test_real_sell_in_files_match (tests.test_recon_utility.TestReconUtility)
+AssertionError: 'MISMATCH' != 'MATCH'
+Ran 4 tests in 0.001s
+FAILED (failures=3)
+
+Test run AFTER the fix
+$ cd shared/fizzco_lake && python3 -m unittest -v tests.test_recon_utility
+test_both_counters_include_start_and_end_dates (tests.test_recon_utility.TestReconUtility) ... ok
+test_identical_files_match_including_end_date (tests.test_recon_utility.TestReconUtility) ... ok
+test_missing_row_still_mismatches (tests.test_recon_utility.TestReconUtility) ... ok
+test_real_sell_in_files_match (tests.test_recon_utility.TestReconUtility) ... ok
+Ran 4 tests in 0.001s
+OK
+
+Final reconciliation run
+$ cd shared/fizzco_lake && python3 databricks/recon_utility.py
+{'table': 'sell_in', 'source': 63, 'trusted': 63, 'diff': 0, 'status': 'MATCH'}
+exit code: 0

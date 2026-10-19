@@ -1,0 +1,27 @@
+Step 1: source table with Change Data Feed (workspace.fizzco.runbook_chunks)
+[21:26:04] Table workspace.fizzco.runbook_chunks created and loaded: 42 rows
+  delta.enableChangeDataFeed = true
+  rows per feed: all=22, inventory=5, promo=3, sell_in=9, sell_out=3
+
+Step 2: Vector Search endpoint (fizzco_vs)
+[21:26:12] Endpoint fizzco_vs creation requested
+  [21:26:14] endpoint state: ONLINE
+
+Step 3: Delta Sync index (workspace.fizzco.runbook_chunks_index)
+[21:26:20] Delta Sync index workspace.fizzco.runbook_chunks_index creation requested (TRIGGERED, managed embeddings)
+  [21:26:21] index status: ready=False rows=None message=Delta sync index creation is pending endpoint provisioning.
+  [21:40:46] index status: ready=False rows=0 message=Delta sync Index creation is pending. Check latest status: https://dbc-269fab6f-fa01.cloud.databricks.com/explore/data/workspace/fizzco/runbook_chunks_index
+  [21:42:36] index status: ready=False rows=0 message=Index is currently pending setup of pipeline resources. Check latest status: https://dbc-269fab6f-fa01.cloud.databricks.com/explore/data/workspace/fizzco/runbook_chunks_index
+  [21:43:07] index status: ready=False rows=0 message=Index is currently is in the process of syncing initial data. Check latest status: https://dbc-269fab6f-fa01.cloud.databricks.com/explore/data/workspace/fizzco/runbook_chunks_index
+  [21:46:01] index status: ready=True rows=42 message=Index is online but is currently is in the process of re-syncing initial data. Check latest status: https://dbc-269fab6f-fa01.cloud.databricks.com/explore/data/workspace/fizzco/runbook_chunks_index
+[21:46:01] Index ready with 42 rows after 19 min 46 s (1186 s)
+
+Step 4: basic similarity search, top_k = 3
+Question: Why did the sell_in reconciliation fail on 31 March 2026, and how was it fixed?
+  1. INC-2026-03-31-001#c1    score=0.6622 [sell_in/incident] Incident note: sell_in reconciliation mismatch on 31 March 2026
+  2. RB-SELL-IN-001#c3        score=0.6391 [sell_in/runbook] Common causes specific to sell_in
+  3. INC-2026-03-31-001#c3    score=0.6227 [sell_in/incident] How it was verified
+Gold chunk (the one that holds the answer) in top 3: True (rank 1)
+Top hit text (first 200 characters): # Incident note: sell_in reconciliation mismatch on 31 March 2026 ## Summary On 31 March 2026 the quarter-end reconciliation for the sell_in feed (job JOB-0049, reconciliation RECON-0009) reported MIS...
+
+HTTP calls made by this run: 89

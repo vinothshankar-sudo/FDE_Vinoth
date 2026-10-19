@@ -1,0 +1,15 @@
+Transcribed from the terminal output pasted into the chat (first freshness run). The run stopped at the delete step because
+the delete call used the wrong REST method and path (HTTP 404 ENDPOINT_NOT_FOUND). The script was fixed afterwards
+(DELETE with primary_keys as a query parameter) and rerun; see direct_access_freshness_output.txt.
+
+Direct Access freshness test, started 00:25:05 UTC
+  1. RB-SELL-OUT-001#c2       score=0.6490 [sell_out/runbook] Triage steps
+  2. RB-SELL-OUT-001#c1       score=0.6238 [sell_out/runbook] Runbook: sell_out load job failure
+  3. RB-SELL-IN-001#c1        score=0.5784 [sell_in/runbook] Runbook: sell_in load job failure
+Test row retrievable before the upsert: False
+[00:25:07] Upserted 1 row in 1.4 s; polling a query every 1 s
+  1. RB-TEST-FRESHNESS-001#c1 score=0.7679 [sell_out/runbook] Late scan file
+  2. RB-SELL-OUT-001#c2       score=0.6490 [sell_out/runbook] Triage steps
+  3. RB-SELL-OUT-001#c1       score=0.6238 [sell_out/runbook] Runbook: sell_out load job failure
+Row retrievable 2.7 s after the upsert started (upsert call 1.4 s)
+RuntimeError: POST .../delete-data returned 404 ENDPOINT_NOT_FOUND (No API found for 'POST /vector-search/indexes/.../delete-data')

@@ -1,0 +1,10 @@
+command: ["streamlit", "run", "app.py"]
+env:
+  - name: DATABRICKS_WAREHOUSE_ID
+    valueFrom: sql-warehouse
+  - name: GENIE_SPACE_ID
+    valueFrom: genie-space
+  - name: VECTOR_INDEX_NAME
+    value: workspace.fizzco.runbook_chunks_index
+  - name: CHAT_ENDPOINT
+    value: databricks-meta-llama-3-3-70b-instruct

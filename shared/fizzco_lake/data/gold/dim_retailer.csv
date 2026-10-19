@@ -1,0 +1,11 @@
+retailer_id,retailer_name,region,channel
+R001,Brightmart,East,Supermarket
+R002,Cornerbay,West,Convenience
+R003,Daily Fresh,East,Supermarket
+R004,Evergreen Foods,West,Supermarket
+R005,Fieldstone,East,Convenience
+R006,Greenleaf,West,Discount
+R007,Harbor Grocers,East,Supermarket
+R008,Ironwood Market,West,Convenience
+R009,Juniper Stores,East,Discount
+R010,Kestrel Mart,West,Supermarket

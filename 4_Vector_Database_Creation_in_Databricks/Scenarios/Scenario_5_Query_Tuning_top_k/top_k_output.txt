@@ -1,0 +1,143 @@
+=== Q1: Why did the sell_in reconciliation fail on 31 March 2026, and how was it fixed?
+-- top_k = 3: first relevant rank = 1; relevant chunks = 2; context words = 520
+  1. INC-2026-03-31-001#c1    score=0.6622 [sell_in/incident] Incident note: sell_in reconciliation mismatch on 31 March 2026
+  2. RB-SELL-IN-001#c3        score=0.6391 [sell_in/runbook] Common causes specific to sell_in
+  3. INC-2026-03-31-001#c3    score=0.6227 [sell_in/incident] How it was verified
+   relevant: ['INC-2026-03-31-001#c1', 'RB-SELL-IN-001#c3']
+-- top_k = 15: first relevant rank = 1; relevant chunks = 3; context words = 2684
+  1. INC-2026-03-31-001#c1    score=0.6622 [sell_in/incident] Incident note: sell_in reconciliation mismatch on 31 March 2026
+  2. RB-SELL-IN-001#c3        score=0.6391 [sell_in/runbook] Common causes specific to sell_in
+  3. INC-2026-03-31-001#c3    score=0.6227 [sell_in/incident] How it was verified
+  4. REG-Q1-2026-001#c1       score=0.6096 [all/register] Job and reconciliation register: Q1 2026
+  5. REG-Q1-2026-001#c3       score=0.5996 [all/register] March quarter end (2026-03-31)
+  6. POL-RECON-001#c1         score=0.5931 [all/policy] Reconciliation policy
+  7. RB-SELL-IN-001#c1        score=0.5917 [sell_in/runbook] Runbook: sell_in load job failure
+  8. INC-2026-03-31-001#c2    score=0.5876 [sell_in/incident] Timeline
+  9. RB-SELL-IN-001#c2        score=0.5708 [sell_in/runbook] Triage steps
+  10. RB-SELL-OUT-001#c2       score=0.5698 [sell_out/runbook] Triage steps
+  11. RB-SELL-IN-001#c4        score=0.5649 [sell_in/runbook] Escalation
+  12. HB-MIGRATION-001#c5      score=0.5604 [all/handbook] 7. Frequently asked questions
+  13. DD-GOLD-001#c1           score=0.5550 [all/dictionary] Data dictionary: gold tables
+  14. RB-SELL-OUT-001#c1       score=0.5540 [sell_out/runbook] Runbook: sell_out load job failure
+  15. REG-Q1-2026-001#c2       score=0.5535 [all/register] January month end (2026-01-31)
+   relevant: ['INC-2026-03-31-001#c1', 'RB-SELL-IN-001#c3', 'RB-SELL-IN-001#c2']
+Top 3 of the top_k=15 run identical to the top_k=3 run: True
+-- answer with top_k = 3: The sell_in reconciliation failed on 31 March 2026 due to an off-by-one error in the date filter used to count trusted rows [S1]. The cause was that the end date of the window was excluded, resulting in 3 rows dated 2026-03-31 not being counted [S1]. The fix was to make the end date inclusive by changing the comparison operator from `<` to `<=` [S2]. After the fix, the pipeline was rerun with the same load_date, and the reconciliation was run again, resulting in a MATCH status [S1].
+   key facts present = True; citations valid = True
+-- answer with top_k = 15: The sell_in reconciliation failed on 31 March 2026 due to an off-by-one error in the date filter used to count trusted rows, which excluded the end date [S1]. The fix was to make the end date inclusive by changing the filter from `<` to `<=` in `count_trusted_rows` [S8]. A rerun of the reconciliation with the fix reported a MATCH with 63 and 63 rows [S1].
+   key facts present = True; citations valid = True
+
+=== Q2: The inventory pipeline failed only at the archive step. Do I need to rerun the whole pipeline?
+-- top_k = 3: first relevant rank = 1; relevant chunks = 1; context words = 522
+  1. RB-INVENTORY-001#c2      score=0.7038 [inventory/runbook] Triage steps
+  2. RB-INVENTORY-001#c3      score=0.7024 [inventory/runbook] Common causes specific to inventory
+  3. RB-INVENTORY-001#c1      score=0.6633 [inventory/runbook] Runbook: inventory load job failure
+   relevant: ['RB-INVENTORY-001#c2']
+-- top_k = 15: first relevant rank = 1; relevant chunks = 1; context words = 2778
+  1. RB-INVENTORY-001#c2      score=0.7039 [inventory/runbook] Triage steps
+  2. RB-INVENTORY-001#c3      score=0.7026 [inventory/runbook] Common causes specific to inventory
+  3. RB-INVENTORY-001#c1      score=0.6634 [inventory/runbook] Runbook: inventory load job failure
+  4. RB-GENERAL-001#c2        score=0.6300 [all/runbook] First five minutes
+  5. CHK-CUTOVER-001#c1       score=0.6055 [all/checklist] Cutover checklist: retire the legacy warehouse
+  6. HB-MIGRATION-001#c5      score=0.6024 [all/handbook] 7. Frequently asked questions
+  7. LIN-INVENTORY#c2         score=0.5997 [inventory/lineage] Lineage
+  8. RB-GENERAL-001#c1        score=0.5715 [all/runbook] Runbook: first response to any pipeline failure
+  9. RB-SELL-OUT-001#c2       score=0.5672 [sell_out/runbook] Triage steps
+  10. RB-SELL-OUT-001#c1       score=0.5671 [sell_out/runbook] Runbook: sell_out load job failure
+  11. CHK-CUTOVER-001#c2       score=0.5667 [all/checklist] Before cutover (five working days ahead)
+  12. RB-SELL-IN-001#c2        score=0.5659 [sell_in/runbook] Triage steps
+  13. RB-SELL-OUT-001#c3       score=0.5646 [sell_out/runbook] Common causes specific to sell_out
+  14. LIN-INVENTORY#c1         score=0.5560 [inventory/lineage] Introduction
+  15. HB-MIGRATION-001#c4      score=0.5388 [all/handbook] 5. Access and roles
+   relevant: ['RB-INVENTORY-001#c2']
+Top 3 of the top_k=15 run identical to the top_k=3 run: True
+
+=== Q3: Which discount percentages are valid for a promotion?
+-- top_k = 3: first relevant rank = 1; relevant chunks = 1; context words = 510
+  1. RB-PROMO-001#c2          score=0.5741 [promo/runbook] Common causes specific to promo
+  2. GLO-KPI-001#c3           score=0.5661 [all/glossary] Promotion uplift and cost
+  3. GLO-KPI-001#c2           score=0.5452 [all/glossary] Why "net sales" is ambiguous
+   relevant: ['RB-PROMO-001#c2']
+-- top_k = 15: first relevant rank = 1; relevant chunks = 3; context words = 2584
+  1. RB-PROMO-001#c2          score=0.5741 [promo/runbook] Common causes specific to promo
+  2. GLO-KPI-001#c3           score=0.5661 [all/glossary] Promotion uplift and cost
+  3. GLO-KPI-001#c2           score=0.5452 [all/glossary] Why "net sales" is ambiguous
+  4. RB-PROMO-001#c1          score=0.5424 [promo/runbook] Runbook: promo load job failure
+  5. DD-GOLD-001#c1           score=0.5008 [all/dictionary] Data dictionary: gold tables
+  6. GLO-KPI-001#c1           score=0.4974 [all/glossary] KPI glossary
+  7. RB-PROMO-001#c3          score=0.4822 [promo/runbook] Fix and rerun
+  8. DD-GOLD-001#c2           score=0.4781 [all/dictionary] gold_promo_performance
+  9. HB-MIGRATION-001#c5      score=0.4773 [all/handbook] 7. Frequently asked questions
+  10. RB-SELL-IN-001#c3        score=0.4759 [sell_in/runbook] Common causes specific to sell_in
+  11. REG-Q1-2026-001#c3       score=0.4754 [all/register] March quarter end (2026-03-31)
+  12. REG-Q1-2026-001#c2       score=0.4676 [all/register] January month end (2026-01-31)
+  13. RB-SELL-OUT-001#c1       score=0.4673 [sell_out/runbook] Runbook: sell_out load job failure
+  14. RB-SELL-IN-001#c1        score=0.4624 [sell_in/runbook] Runbook: sell_in load job failure
+  15. POL-RECON-001#c1         score=0.4617 [all/policy] Reconciliation policy
+   relevant: ['RB-PROMO-001#c2', 'DD-GOLD-001#c1', 'DD-GOLD-001#c2']
+Top 3 of the top_k=15 run identical to the top_k=3 run: True
+
+=== Q4: How many rows of difference are accepted for a reconciliation to count as MATCH?
+-- top_k = 3: first relevant rank = 1; relevant chunks = 2; context words = 520
+  1. POL-RECON-001#c1         score=0.7061 [all/policy] Reconciliation policy
+  2. HB-MIGRATION-001#c4      score=0.6748 [all/handbook] 5. Access and roles
+  3. INC-2026-03-31-001#c3    score=0.6512 [sell_in/incident] How it was verified
+   relevant: ['POL-RECON-001#c1', 'HB-MIGRATION-001#c4']
+-- top_k = 15: first relevant rank = 1; relevant chunks = 2; context words = 2234
+  1. POL-RECON-001#c1         score=0.7061 [all/policy] Reconciliation policy
+  2. HB-MIGRATION-001#c4      score=0.6748 [all/handbook] 5. Access and roles
+  3. INC-2026-03-31-001#c3    score=0.6512 [sell_in/incident] How it was verified
+  4. INC-2026-03-31-001#c1    score=0.6496 [sell_in/incident] Incident note: sell_in reconciliation mismatch on 31 March 2026
+  5. REG-Q1-2026-001#c1       score=0.6383 [all/register] Job and reconciliation register: Q1 2026
+  6. POL-RECON-001#c2         score=0.6351 [all/policy] Rules
+  7. RB-SELL-IN-001#c3        score=0.6288 [sell_in/runbook] Common causes specific to sell_in
+  8. RB-SELL-IN-001#c4        score=0.6240 [sell_in/runbook] Escalation
+  9. INC-2026-03-31-001#c2    score=0.6190 [sell_in/incident] Timeline
+  10. HB-MIGRATION-001#c5      score=0.6001 [all/handbook] 7. Frequently asked questions
+  11. REG-Q1-2026-001#c3       score=0.5860 [all/register] March quarter end (2026-03-31)
+  12. RB-PROMO-001#c3          score=0.5805 [promo/runbook] Fix and rerun
+  13. POL-RECON-001#c3         score=0.5755 [all/policy] Investigating a MISMATCH
+  14. RB-GENERAL-001#c3        score=0.5676 [all/runbook] Escalation
+  15. RB-SELL-OUT-001#c3       score=0.5666 [sell_out/runbook] Common causes specific to sell_out
+   relevant: ['POL-RECON-001#c1', 'HB-MIGRATION-001#c4']
+Top 3 of the top_k=15 run identical to the top_k=3 run: True
+
+=== Q5: What happens if someone triggers a pipeline manually without a load_date?
+-- top_k = 3: first relevant rank = 3; relevant chunks = 1; context words = 600
+  1. RB-GENERAL-001#c2        score=0.6196 [all/runbook] First five minutes
+  2. RB-INVENTORY-001#c1      score=0.5926 [inventory/runbook] Runbook: inventory load job failure
+  3. RB-SELL-IN-001#c2        score=0.5864 [sell_in/runbook] Triage steps
+   relevant: ['RB-SELL-IN-001#c2']
+-- top_k = 15: first relevant rank = 3; relevant chunks = 3; context words = 2613
+  1. RB-GENERAL-001#c2        score=0.6197 [all/runbook] First five minutes
+  2. RB-INVENTORY-001#c1      score=0.5926 [inventory/runbook] Runbook: inventory load job failure
+  3. RB-SELL-IN-001#c2        score=0.5865 [sell_in/runbook] Triage steps
+  4. HB-MIGRATION-001#c2      score=0.5855 [all/handbook] 2. Naming conventions
+  5. HB-MIGRATION-001#c5      score=0.5855 [all/handbook] 7. Frequently asked questions
+  6. LIN-SELL-IN#c2           score=0.5850 [sell_in/lineage] Lineage
+  7. RB-GENERAL-001#c1        score=0.5831 [all/runbook] Runbook: first response to any pipeline failure
+  8. RB-SELL-IN-001#c1        score=0.5784 [sell_in/runbook] Runbook: sell_in load job failure
+  9. LIN-INVENTORY#c2         score=0.5701 [inventory/lineage] Lineage
+  10. LIN-SELL-IN#c1           score=0.5645 [sell_in/lineage] Introduction
+  11. HB-MIGRATION-001#c6      score=0.5630 [all/handbook] 7. Frequently asked questions
+  12. HB-MIGRATION-001#c4      score=0.5622 [all/handbook] 5. Access and roles
+  13. CHK-CUTOVER-001#c2       score=0.5612 [all/checklist] Before cutover (five working days ahead)
+  14. RB-PROMO-001#c1          score=0.5601 [promo/runbook] Runbook: promo load job failure
+  15. RB-INVENTORY-001#c3      score=0.5594 [inventory/runbook] Common causes specific to inventory
+   relevant: ['RB-SELL-IN-001#c2', 'RB-GENERAL-001#c1', 'RB-SELL-IN-001#c1']
+Top 3 of the top_k=15 run identical to the top_k=3 run: True
+-- answer with top_k = 3: If someone triggers a pipeline manually without a load_date, it fails at the start of the run [S3]. The load_date parameter has no default value, so a manual trigger without it will fail [S3]. To fix this, the pipeline should be re-triggered with the load_date in the format YYYY-MM-DD [S3].
+   key facts present = True; citations valid = True
+-- answer with top_k = 15: If someone triggers a pipeline manually without a load_date, the run fails at once because the load_date parameter has no default value [S3], [S7], [S8], [S13].
+   key facts present = True; citations valid = True
+
+Summary
+| question | first relevant rank (k=3) | relevant chunks (k=3) | context words (k=3) | first relevant rank (k=15) | relevant chunks (k=15) | context words (k=15) |
+|---|---|---|---|---|---|---|
+| Q1 | 1 | 2 | 520 | 1 | 3 | 2684 |
+| Q2 | 1 | 1 | 522 | 1 | 1 | 2778 |
+| Q3 | 1 | 1 | 510 | 1 | 3 | 2584 |
+| Q4 | 1 | 2 | 520 | 1 | 2 | 2234 |
+| Q5 | 3 | 1 | 600 | 3 | 3 | 2613 |
+
+HTTP calls to Databricks REST by this run: 10; model-serving calls (answers): 4

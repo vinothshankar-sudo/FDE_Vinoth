@@ -1,0 +1,25 @@
+{
+  "name": "pl_fizzco_sell_in_load",
+  "description": "Sell-in orders - SFTP to raw, then raw to trusted (synthetic)",
+  "properties": {
+    "parameters": {"load_date": {"type": "String"}},
+    "activities": [
+      {
+        "name": "Copy_sell_in_to_raw",
+        "type": "Copy",
+        "inputs": [{"referenceName": "ds_sftp_fizzco_sell_in", "type": "DatasetReference"}],
+        "outputs": [{"referenceName": "ds_adls_fizzco_raw_sell_in", "type": "DatasetReference"}],
+        "typeProperties": {"sink": {"container": "fizzco-landing", "folder": "raw/sell_in/"}}
+      },
+      {
+        "name": "Run_sell_in_transform",
+        "type": "DatabricksNotebook",
+        "dependsOn": [{"activity": "Copy_sell_in_to_raw", "dependencyConditions": ["Succeeded"]}],
+        "typeProperties": {
+          "notebookPath": "/Fizzco/sell_in_transform",
+          "baseParameters": {"container": "fizzco-landing", "load_date": "@pipeline().parameters.load_date"}
+        }
+      }
+    ]
+  }
+}

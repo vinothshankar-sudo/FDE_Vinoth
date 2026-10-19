@@ -1,0 +1,16 @@
+# Progress log (stderr) of one real run on 2026-10-07, copied from the Terminal. Message ids are not secrets.
+2026-10-07 22:57:57,450 INFO genie_api_demo - step start: Genie API demo
+2026-10-07 22:57:58,450 INFO genie_api_demo - message 01f1c2cc72e619618d8a9c28fe1bfa0e status: FILTERING_CONTEXT
+2026-10-07 22:58:00,759 INFO genie_api_demo - message 01f1c2cc72e619618d8a9c28fe1bfa0e status: ASKING_AI
+2026-10-07 22:58:04,053 INFO genie_api_demo - message 01f1c2cc72e619618d8a9c28fe1bfa0e status: PENDING_WAREHOUSE
+2026-10-07 22:58:08,891 INFO genie_api_demo - message 01f1c2cc72e619618d8a9c28fe1bfa0e status: PENDING_WAREHOUSE
+2026-10-07 22:58:15,946 INFO genie_api_demo - message 01f1c2cc72e619618d8a9c28fe1bfa0e status: EXECUTING_QUERY
+2026-10-07 22:58:26,391 INFO genie_api_demo - message 01f1c2cc72e619618d8a9c28fe1bfa0e status: COMPLETED
+2026-10-07 22:58:26,391 INFO genie_api_demo - conversation id: 01f1c2cc72c91eeca530a3e9aa48d129
+2026-10-07 22:58:27,566 INFO genie_api_demo - message 01f1c2cc84421a9da99df71ee853d69b status: FILTERING_CONTEXT
+2026-10-07 22:58:29,872 INFO genie_api_demo - message 01f1c2cc84421a9da99df71ee853d69b status: ASKING_AI
+2026-10-07 22:58:33,168 INFO genie_api_demo - message 01f1c2cc84421a9da99df71ee853d69b status: PENDING_WAREHOUSE
+2026-10-07 22:58:37,980 INFO genie_api_demo - message 01f1c2cc84421a9da99df71ee853d69b status: EXECUTING_QUERY
+2026-10-07 22:58:45,037 INFO genie_api_demo - message 01f1c2cc84421a9da99df71ee853d69b status: ASKING_AI
+2026-10-07 22:58:55,485 INFO genie_api_demo - message 01f1c2cc84421a9da99df71ee853d69b status: COMPLETED
+2026-10-07 22:58:56,017 INFO genie_api_demo - step end: done

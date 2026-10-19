@@ -1,0 +1,36 @@
+--- Strategy size=200 overlap=0: 38 chunks, average 156 tokens
+  Q1: gold chunk rank = 1; top-1 = INC-2026-03-31-001#c1; context words = 430; precision@3 = 0.93
+  Q2: gold chunk rank = 1; top-1 = RB-INVENTORY-001#c2; context words = 442; precision@3 = 1.00
+  Q3: gold chunk rank = 3; top-1 = GLO-KPI-001#c2; context words = 585; precision@3 = 0.66
+  Q4: gold chunk rank = 1; top-1 = POL-RECON-001#c1; context words = 600; precision@3 = 0.33
+  Q5: gold chunk rank = None; top-1 = RB-GENERAL-001#c2; context words = 455; precision@3 = 0.00
+
+--- Strategy size=200 overlap=40: 42 chunks, average 168 tokens
+  Q1: gold chunk rank = 1; top-1 = INC-2026-03-31-001#c1; context words = 520; precision@3 = 0.62
+  Q2: gold chunk rank = 1; top-1 = RB-INVENTORY-001#c2; context words = 522; precision@3 = 1.00
+  Q3: gold chunk rank = 1; top-1 = RB-PROMO-001#c2; context words = 510; precision@3 = 0.39
+  Q4: gold chunk rank = 1; top-1 = POL-RECON-001#c1; context words = 520; precision@3 = 0.38
+  Q5: gold chunk rank = 3; top-1 = RB-GENERAL-001#c2; context words = 600; precision@3 = 0.33
+
+--- Strategy size=800 overlap=0: 15 chunks, average 396 tokens
+  Q1: gold chunk rank = 1; top-1 = INC-2026-03-31-001#c1; context words = 1404; precision@3 = 0.31
+  Q2: gold chunk rank = 1; top-1 = RB-INVENTORY-001#c1; context words = 1158; precision@3 = 0.38
+  Q3: gold chunk rank = 2; top-1 = GLO-KPI-001#c1; context words = 1074; precision@3 = 0.36
+  Q4: gold chunk rank = 1; top-1 = POL-RECON-001#c1; context words = 1307; precision@3 = 0.33
+  Q5: gold chunk rank = 1; top-1 = RB-GENERAL-001#c1; context words = 1337; precision@3 = 0.40
+
+--- Strategy size=800 overlap=100: 15 chunks, average 402 tokens
+  Q1: gold chunk rank = 1; top-1 = INC-2026-03-31-001#c1; context words = 1404; precision@3 = 0.31
+  Q2: gold chunk rank = 1; top-1 = RB-INVENTORY-001#c1; context words = 967; precision@3 = 0.46
+  Q3: gold chunk rank = 2; top-1 = GLO-KPI-001#c1; context words = 1074; precision@3 = 0.36
+  Q4: gold chunk rank = 1; top-1 = POL-RECON-001#c1; context words = 1307; precision@3 = 0.33
+  Q5: gold chunk rank = 1; top-1 = RB-GENERAL-001#c1; context words = 973; precision@3 = 0.00
+
+Summary (5 questions, top_k = 3)
+| size | overlap | chunks | hit@1 | hit@3 | MRR | avg context words | avg precision@3 |
+|---|---|---|---|---|---|---|---|
+| 200 | 0 | 38 | 3/5 | 4/5 | 0.67 | 502 | 0.58 |
+| 200 | 40 | 42 | 4/5 | 5/5 | 0.87 | 534 | 0.55 |
+| 800 | 0 | 15 | 4/5 | 5/5 | 0.90 | 1256 | 0.36 |
+| 800 | 100 | 15 | 4/5 | 5/5 | 0.90 | 1145 | 0.29 |
+Endpoint calls made in this run: 11 (cached results cost nothing).

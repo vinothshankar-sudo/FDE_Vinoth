@@ -1,0 +1,48 @@
+# Independent verification of validate_inventory.py 
+# Synthetic data only. stdout shown; stderr INFO/ERROR log lines omitted except for exit-2 cases.
+
+## 1. Real file: App_Object_Inventory_FILLED.csv  (expected: 2 violations, FAIL, exit 1)
+| line | object_id | rule | detail |
+|---|---|---|---|
+| 7 | OBJ-005 | R2 | duplicate object_id (first seen on line 6) |
+| 9 | OBJ-008 | R3 | depends_on 'OBJ-099' not found as an object_id |
+FAIL
+exit=1
+
+## 2. Same file with both planted errors repaired  (expected: PASS, exit 0)
+| line | object_id | rule | detail |
+|---|---|---|---|
+PASS
+exit=0
+
+## 3. R4 and R5 negative test: type 'Dashboard' x3, status 'Draft' x1  (expected: 4 violations, FAIL)
+| line | object_id | rule | detail |
+|---|---|---|---|
+| 2 | OBJ-001 | R4 | object_type 'Dashboard' not in ['Notebook', 'Pipeline', 'Table'] |
+| 2 | OBJ-001 | R5 | status 'Draft' not in ['Active', 'Retired'] |
+| 5 | OBJ-004 | R4 | object_type 'Dashboard' not in ['Notebook', 'Pipeline', 'Table'] |
+| 7 | OBJ-007 | R4 | object_type 'Dashboard' not in ['Notebook', 'Pipeline', 'Table'] |
+FAIL
+exit=1
+
+## 4. R1 negative test: first two header columns swapped
+| line | object_id | rule | detail |
+|---|---|---|---|
+| 1 |  | R1 | columns ['object_name', 'object_id', 'object_type', 'layer', 'source_system', 'target_table', 'o
+| 3 | sell_in_transform | R3 | depends_on 'OBJ-001' not found as an object_id |
+| 4 | trusted_sell_in | R3 | depends_on 'OBJ-002' not found as an object_id |
+| 6 | inventory_transform | R3 | depends_on 'OBJ-004' not found as an object_id |
+| 8 | promo_transform | R3 | depends_on 'OBJ-001' not found as an object_id |
+| 9 | trusted_promo | R3 | depends_on 'OBJ-008' not found as an object_id |
+| 10 | recon_utility | R3 | depends_on 'OBJ-003' not found as an object_id |
+FAIL
+exit=1
+(note: R3 lines below R1 are knock-on noise from the swapped header; the R1 line is the root cause)
+
+## 5. Missing file  (expected: exit 2, error on stderr)
+ERROR validate_inventory - cannot read inventory nope.csv: [Errno 2] No such file or directory: 'nope.csv'
+exit=2
+
+## 6. No arguments  (expected: exit 2)
+ERROR validate_inventory - usage: validate_inventory.py <inventory.csv>; got arguments []
+exit=2
