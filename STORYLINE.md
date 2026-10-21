@@ -1,6 +1,6 @@
 # Fizzco Migration Assurance Hub: the single story behind all 31 scenarios
 
-Status: approved storyline. All data, names and systems are synthetic. No client, Tiger or personal data.
+Status: All data, names and systems are synthetic. No client, Tiger or personal data.
 Source assignment: `Data_Engineer_to_FDE_Readiness_Framework.md` (6 modules, 31 scenarios).
 
 ## 1. The story in one paragraph
